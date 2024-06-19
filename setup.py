@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ragrid",
-    version="0.1.1", 
+    version="0.1.2", 
     packages=find_packages(),
     license="MIT",
     description="This library is to search the best parameters across different steps of the RAG process.",
@@ -17,7 +17,7 @@ setup(
         "trulens-eval>=0.27.0",
         "chromadb>=0.4.24",
         "sentence-transformers>=2.6.1",
-        "unstructured[pdf]==0.13.0",
+        "unstructured[pdf]>=0.13.0",
     ],
     include_package_data=True,
     classifiers=[

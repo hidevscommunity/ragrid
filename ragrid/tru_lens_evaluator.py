@@ -4,8 +4,8 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain.schema import StrOutputParser
 from trulens_eval import TruChain, Tru
 from trulens_eval.app import App
-from trulens_eval.feedback import Feedback, Groundedness
-from trulens_eval.feedback.provider import OpenAI
+from trulens_eval.feedback import Feedback
+from trulens_eval.feedback.provider.openai import OpenAI
 from langchain_community.vectorstores import Chroma
 import numpy as np
 
@@ -91,16 +91,13 @@ class TruLensEvaluator:
                 # Initialize provider class
                 provider = OpenAI()
                 context = App.select_context(rag_chain)
-
-                grounded = Groundedness(groundedness_provider=OpenAI())
                 f_groundedness = (
                     Feedback(
-                        grounded.groundedness_measure_with_cot_reasons,
-                        name="Groundedness",
+                        provider.groundedness_measure_with_cot_reasons,
+                        name="Groundedness"
                     )
                     .on(context.collect())
                     .on_output()
-                    .aggregate(grounded.grounded_statements_aggregator)
                 )
 
                 f_answer_relevance = Feedback(
